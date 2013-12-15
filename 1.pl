@@ -89,7 +89,7 @@ my $socket = &createSocket;
 
 &connectCheckNick;
 
-&joinChan($channel);
+&joinChan($socket,$channel);
 
 # Keep reading the lines from the server respond to ping with pong
 while (my $input = <$socket>) {
