@@ -10,10 +10,11 @@ use URI::Find::Simple qw(list_uris);
 use URI::Title qw(title);
 use WWW::Mechanize;
 use LWP::Protocol::socks;
+use irc qw(:DEFAULT);
 
 # This setup works with I2p but for some reason only if I have my irc client open and connected to irc2p
-my $nick = "aaajajaaaaahhaaaa";
-my $login ="aaaaaaaaaa";
+my $nick = "blahblahblah";
+my $login ="blahblahblah";
 my $channel = "#testbot";
 
 
@@ -43,7 +44,9 @@ return $title;
 
 sub checkForURL {          
 # Put this in a sub later
-my @list = list_uris(@_);
+#my @list = list_uris(@_);
+my @list = list_uris($_[0]);
+my $socket = $_[1];
 my $how_many_found = @list;
 # If this is an .i2p address use method  localhost:4444
 # else use tor socks proxy 
@@ -69,27 +72,24 @@ if ($is_eepsite) {
 	# Call some method to get title of eepsite.
 }
 else {
-my $title = getStuffOverTor($url);
+my $title = &getStuffOverTor($url);
 
 # Is this an eepsite. If it is do something,else just use socks connection
 # to tor on localhost and we assume it is a regular website or .onion
 
+printTitle($socket,$channel,$title,$url);
 
-# If the refactoring of this code works. Then make this sub return
-# the url and the title and put these print statements in seperate sub.
-print $socket "PRIVMSG $channel $url\n";
-print $socket "PRIVMSG $channel Title: $title\n";
 }	  
 }		
 }
 # Should I prefix function being called with ampersand if it is being called from module?
 my $socket = &createSocket;
 
-&setNick;
+setNick($socket,$login,$nick);
 
-&connectCheckNick;
+connectCheckNick($socket);
 
-&joinChan($socket,$channel);
+joinChan($socket,$channel);
 
 # Keep reading the lines from the server respond to ping with pong
 while (my $input = <$socket>) {
@@ -101,7 +101,7 @@ while (my $input = <$socket>) {
 	# Everything happens here.
 else { 
 # Do something
-&checkForURL($input);
+&checkForURL($input,$socket);
 	}
 }
 
