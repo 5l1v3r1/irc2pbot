@@ -21,7 +21,7 @@ BEGIN {
         our @ISA = qw(Exporter);
 
         # Functions and variables which are exported by default.
-        our @EXPORT = qw(getStuffOverTor checkForURL $server $port);
+        our @EXPORT = qw(getStuffOverTor checkForURL getStuffOverI2P);
 
         # Functions and variables which can be optionally exported
         #our @EXPORT_OK = qw($server %hashit func3); # Fill in my own here.
@@ -38,10 +38,22 @@ my $url = $_[0];
 my $mech = WWW::Mechanize->new(timeout => 60*5);
 $mech->proxy(['http','https'],'socks://localhost:9050');
 $mech->get($url);
-my $title = $mech->title();
+return $mech->title();
 # Up to about here.
-return $title;
 } 
+
+# my $title = getStuffOverI2P($url);
+sub getStuffOverI2P {
+my $url = $_[0];
+my $mech = WWW::Mechanize->new(timeout => 60*5);
+$mech->proxy(['http','https'],'http://localhost:4444');
+$mech->get($url);
+# I could probably also just do
+return $mech->title();
+
+}
+
+
 
 # How to call:
 # my ($how_many_found,$url) = checkForURL($input);
@@ -75,6 +87,7 @@ my $url = $_[0];
 
 my $is_eepsite = ($url =~ /\.(i2p.?)\b/i); # Put this in method later
 if ($is_eepsite) {
+	my $title = &getStuffOverI2P($url);
 	return ("1",$title);
 	# Call some method to get title of eepsite.
 }
