@@ -76,10 +76,11 @@ return ($how_many_found,$url);
 }
 
 
-# Also return $how_many_found 
-# $how_many_found will either always be 0 or 1.
+# Also return $how_many_eep 
+# $how_many_found eep either always be 0 or 1.
 # $how_many_found will return how many eepsites found in url.
-# my ($how_many_found, $title) = isEepSite($url);
+# my ($how_many_eep, $title) = isEepSite($url);
+# if ($how_many_eep ~= "0")
 #
 sub isEepSite {
 

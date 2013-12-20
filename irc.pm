@@ -65,9 +65,9 @@ print $socket "USER $login 8 *:Sample IRC Bot In Perl\r\n";
 
 # Print title in channel
 # Call by
-# my $socket = &createSocket;
-# my $title = &getStuffOverTor($url);
-# &printTitle($socket,$channel,$title,$url);
+# my $socket = createSocket;
+# my $title = getStuffOverTor($url);
+# printTitle($socket,$channel,$title,$url);
 #
 sub printTitle {
 my $socket = $_[0];
@@ -80,8 +80,8 @@ print $socket "PRIVMSG $channel Title: $title\n";
 }
 
 # Call by
-# my $socket = &createSocket;
-# &connectCheckNick($socket);
+# my $socket = createSocket;
+# connectCheckNick($socket);
 #
 sub connectCheckNick {
 # According to this link:
@@ -102,8 +102,8 @@ while (my $input = <$socket>) {
 }
 }
 #Call by 
-# my $socket = &createSocket;
-# &joinChan($socket,$channel);
+# my $socket = createSocket;
+# joinChan($socket,$channel);
 sub joinChan {
 my $socket = $_[0];
 my $channel = $_[1];
