@@ -89,11 +89,11 @@ my $url = $_[0];
 my $is_eepsite = ($url =~ /\.(i2p.?)\b/i); # Put this in method later
 if ($is_eepsite) {
 	my $title = &getStuffOverI2P($url);
-	return ("1",$title);
+	return (1,$title);
 	# Call some method to get title of eepsite.
 }
 else {
-	return ("0","Nothing found.");
+	return (0,"Nothing found.");
 
 
 }

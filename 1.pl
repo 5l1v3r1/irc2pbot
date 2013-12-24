@@ -8,7 +8,7 @@ use irc qw(:DEFAULT);
 use web qw(:DEFAULT);
 
 # This setup works with I2p but for some reason only if I have my irc client open and connected to irc2p
-my $nick = "blahblahblah";
+my $nick = "blahblahblajh";
 my $login ="blahblahblah";
 my $channel = "#testbot";
 
@@ -48,17 +48,20 @@ if ($how_many_found > 0) {
 	# Okay we got a URL
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
-	my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
-    if ($how_many_eep ~= "0") {
+my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
+ if ($how_many_eep == 0) {
      print "This is not an eepsite";
-	 # my $title = getStuffOverTor($url);
-	 # printTitle($socket,$channel,$title,$url);
-	}
+	 my $title = getStuffOverTor($url);
+	 printTitle($socket,$channel,$title,$url);
+
+ }
+}
+}
 
 
 }
 
 
-	}
-}
+	
+
 
