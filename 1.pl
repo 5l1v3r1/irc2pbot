@@ -8,8 +8,8 @@ use irc qw(:DEFAULT);
 use web qw(:DEFAULT);
 
 # This setup works with I2p but for some reason only if I have my irc client open and connected to irc2p
-my $nick = "blahblahblajh";
-my $login ="blahblahblah";
+my $nick = "blahblahblajh2";
+my $login ="blahblahblajh2";
 my $channel = "#testbot";
 
 # Add second nick later for if nick is reserved
