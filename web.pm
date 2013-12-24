@@ -1,4 +1,4 @@
-package web;
+package web;    
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 
 use URI::Find;
 use URI::Find::Simple qw(list_uris);
-use URI::Title qw(title);
+#use URI::Title qw(title);
 use WWW::Mechanize;
 use LWP::Protocol::socks;
 
@@ -21,7 +21,7 @@ BEGIN {
         our @ISA = qw(Exporter);
 
         # Functions and variables which are exported by default.
-        our @EXPORT = qw(getStuffOverTor checkForURL getStuffOverI2P);
+        our @EXPORT = qw(getStuffOverTor checkForURL getStuffOverI2P isEepSite);
 
         # Functions and variables which can be optionally exported
         #our @EXPORT_OK = qw($server %hashit func3); # Fill in my own here.
@@ -93,7 +93,7 @@ if ($is_eepsite) {
 	# Call some method to get title of eepsite.
 }
 else {
-	return (0,"Nothing found.");
+	return (0,'');
 
 
 }
