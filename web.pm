@@ -6,7 +6,6 @@ use warnings;
 
 use URI::Find;
 use URI::Find::Simple qw(list_uris);
-#use URI::Title qw(title);
 use WWW::Mechanize;
 use LWP::Protocol::socks;
 
@@ -23,8 +22,6 @@ BEGIN {
         # Functions and variables which are exported by default.
         our @EXPORT = qw(getStuffOverTor checkForURL getStuffOverI2P isEepSite);
 
-        # Functions and variables which can be optionally exported
-        #our @EXPORT_OK = qw($server %hashit func3); # Fill in my own here.
 }
 # Exported package globals go here
 
