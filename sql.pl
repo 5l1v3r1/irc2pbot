@@ -12,8 +12,8 @@ my $pass = "";
 my $host="localhost";
  
 ## SQL query
-my $channel = '#foo';
-my $url = 'https://www.duckduckgo.com/blahblah.html';
+my $channel = '#hello';
+my $url = 'https://www.somwebsite.com';
 
 
 
@@ -32,10 +32,10 @@ my $url = 'https://www.duckduckgo.com/blahblah.html';
   # Same thing, but using placeholders
 
   # Now retrieve data from the table.
-  my $sth = $dbh->prepare("SELECT * FROM urls");
-  $sth->execute();
+#  my $sth = $dbh->prepare("SELECT * FROM urls");
+#  $sth->execute();
   
-  $sth->finish();
+#  $sth->finish();
 
   # Disconnect from the database.
   $dbh->disconnect();
