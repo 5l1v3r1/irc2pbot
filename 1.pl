@@ -45,6 +45,9 @@ else {
 #
 my ($how_many_found,$url) = checkForURL($input);
 if ($how_many_found > 0) {
+	# Code that interacts with database. Make it add url to table here.
+
+
 	# Okay we got a URL
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
