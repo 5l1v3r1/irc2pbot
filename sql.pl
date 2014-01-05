@@ -1,19 +1,22 @@
 #!/usr/bin/perl -w
- 
+
+# Todo:
+# CURDATE should save time accurate to minute and seconds
+# Use all variables.
  
  
 my $db ="urldatabase";
 my $user = "root";
  
 ## mysql database password
-my $pass = "";
+my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
  
 ## user hostname : This should be "localhost" but it can be diffrent too
 my $host="localhost";
  
 ## SQL query
-my $channel = '#hello';
-my $url = 'https://www.somwebsite.com';
+my $channel = '#yossssu';
+my $url = 'https://www.som.com/';
 
 
 
@@ -21,21 +24,14 @@ my $url = 'https://www.somwebsite.com';
   use DBI();
 
   # Connect to the database.
-  my $dbh = DBI->connect("DBI:mysql:database=urldatabase;host=localhost",
-                         "root", "jg&SH#2C.n=j9vHxzePMXAjeJ",
+  my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
+                         "$user","$pass" ,
                          {'RaiseError' => 1});
 
   # INSERT some data into 'foo'. We are using $dbh->quote() for
   # quoting the name.
-  $dbh->do("INSERT INTO urls(url,channel,date_posted)  VALUES ('$url','$channel',CURDATE());");
+  $dbh->do("INSERT INTO urls(url,channel,date_posted)  VALUES ('$url','$channel',NOW());");
 
-  # Same thing, but using placeholders
-
-  # Now retrieve data from the table.
-#  my $sth = $dbh->prepare("SELECT * FROM urls");
-#  $sth->execute();
-  
-#  $sth->finish();
-
+  # NOW(); is a mysql function that returns current date and time
   # Disconnect from the database.
   $dbh->disconnect();
