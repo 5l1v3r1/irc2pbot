@@ -13,7 +13,7 @@ BEGIN {
 	our @ISA = qw(Exporter);
 
 	# Functions and variables which are exported by default.
-	our @EXPORT = qw($db $user $pass $host connectToMySQL);
+	our @EXPORT = qw($db $user $pass $host connectToMySQL addURLToDB disConnectMySQL);
 }
 
 
@@ -42,10 +42,11 @@ sub connectToMySQL {
  }
 
  # To call 
- # addURLToDB($url,$channel);
+ # addURLToDB($dbh,$url,$channel);
 sub addURLToDB {
-my $url = $_[0];
-my $channel = $_[1];
+my $dbh = $_[0];
+my $url = $_[1];
+my $channel = $_[2];
 
 # INSERT some data into 'foo'. We are using $dbh->quote() for
 # quoting the name.
