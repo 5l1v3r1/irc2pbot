@@ -53,3 +53,24 @@ mysql> GRANT ALL ON urldatabase.* TO irc2pbot@localhost IDENTIFIED BY 'jg&SH#2C.
 
 $ mysql -u irc2pbot -p urldatabase
 
+
+
+
+See if everything works?
+---------------------------
+
+
+$ ./2.pl
+
+$ mysql -u ircpbot -p urldatabase
+ 
+mysql> select * from urls;
++----+---------------------+------------+---------------------+
+| id | url                 | channel    | date_posted         |
++----+---------------------+------------+---------------------+
+|  1 | https://www.foo.com | #whoogirls | 2014-01-07 08:59:28 |
++----+---------------------+------------+---------------------+
+1 row in set (0.02 sec)
+
+mysql> 
+
