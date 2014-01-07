@@ -21,7 +21,7 @@ BEGIN {
 # I can write a function to change these values but for now
 # they will stay the same for development.
 my $db ="urldatabase";
-my $user = "root";
+my $user = "irc2pbot";
  
 ## mysql database password
 my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
