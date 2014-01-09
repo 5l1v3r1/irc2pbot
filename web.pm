@@ -48,12 +48,22 @@ $mech->proxy(['http'],'http://localhost:4444');
 # Set longer timeout perhaps for I2P eepsites.
 # $mech->proxy(['https', 'http', 'ftp'], 'my_proxy:8080');
 # Takes arguments in square brackets.
-$mech->get($url);
+eval {
+
+	$mech->get($url);
+};
+
+if ($@) {
+return "Problem getting title.\n";
+}
+else 
+{
 # I could probably also just do
+# Should probably put an eval around return $mech->title(); too
 return $mech->title();
 # Can't decide now but putting an eval here could also be a good idea.
 # eval { $mech->get($url); }; if ($@) { return "Could not get title";}
-
+ }
 }
 
 # Probably need a seperate getStuffOverI2PHTTPS
@@ -91,15 +101,16 @@ return ($how_many_found,$url);
 sub isEepSite {
 
 my $url = $_[0];
+my $title;
 
 my $is_eepsite = ($url =~ /\.(i2p.?)\b/i); # Put this in method later
 if ($is_eepsite) {
-    eval {
-	my $title = &getStuffOverI2P($url);
-};
-if ($@) {
- my $title = "Could not get title, error occured.";
-}
+	#   eval {
+	$title = &getStuffOverI2P($url);
+#};
+#if ($@) {
+ $title = "Could not get title, error occured.";
+#}
 	return (1,$title);
 	# Call some method to get title of eepsite.
 }
