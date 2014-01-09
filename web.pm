@@ -51,6 +51,8 @@ $mech->proxy(['http'],'http://localhost:4444');
 $mech->get($url);
 # I could probably also just do
 return $mech->title();
+# Can't decide now but putting an eval here could also be a good idea.
+# eval { $mech->get($url); }; if ($@) { return "Could not get title";}
 
 }
 
@@ -92,7 +94,12 @@ my $url = $_[0];
 
 my $is_eepsite = ($url =~ /\.(i2p.?)\b/i); # Put this in method later
 if ($is_eepsite) {
+    eval {
 	my $title = &getStuffOverI2P($url);
+};
+if ($@) {
+ my $title = "Could not get title, error occured.";
+}
 	return (1,$title);
 	# Call some method to get title of eepsite.
 }
