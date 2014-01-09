@@ -42,13 +42,20 @@ return $mech->title();
 # my $title = getStuffOverI2P($url);
 sub getStuffOverI2P {
 my $url = $_[0];
-my $mech = WWW::Mechanize->new(timeout => 60*5);
-$mech->proxy(['http','https'],'http://localhost:4444');
+my $mech = WWW::Mechanize->new(timeout => 60*8);
+$mech->proxy(['http'],'http://localhost:4444');
+# Only want http data to go over port 4444
+# Set longer timeout perhaps for I2P eepsites.
+# $mech->proxy(['https', 'http', 'ftp'], 'my_proxy:8080');
+# Takes arguments in square brackets.
 $mech->get($url);
 # I could probably also just do
 return $mech->title();
 
 }
+
+# Probably need a seperate getStuffOverI2PHTTPS
+# http://localhost:4445
 
 
 

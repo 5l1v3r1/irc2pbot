@@ -73,4 +73,12 @@ mysql> select * from urls;
 mysql> 
 </pre>
 
+TODO:
+--------
+
+Methods should be able to recover from errors. Use eval. I can forget to check returned error values,but not to check for an exception.
+
+I should write tests. 
+
+Write code to configure mysql automatically and install dependencies via cpan automatically.
 
