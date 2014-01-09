@@ -6,10 +6,10 @@ use strict;
 
 use irc qw(:DEFAULT);
 use web qw(:DEFAULT);
-
+use mysql qw(:DEFAULT);
 # This setup works with I2p but for some reason only if I have my irc client open and connected to irc2p
-my $nick = "blahblahblajh2";
-my $login ="blahblahblajh2";
+my $nick = "1blahblahblajh2";
+my $login ="1blahblahblajh2";
 my $channel = "#testbot";
 
 # Add second nick later for if nick is reserved
@@ -22,7 +22,7 @@ my $channel = "#testbot";
  
 
 
-
+# Perhaps I need eval here too.
 
 my $socket = createSocket;
 
@@ -46,6 +46,12 @@ else {
 my ($how_many_found,$url) = checkForURL($input);
 if ($how_many_found > 0) {
 	# Okay we got a URL
+	# Now add it to database.
+	my $dbh = connectToMySQL;
+	addURLToDB($dbh,$url,$channel);
+	disConnectMySQL($dbh);
+
+
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
 my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
