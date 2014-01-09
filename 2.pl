@@ -6,7 +6,7 @@ use mysql qw(:DEFAULT);
 my $url = "https://www.foo.com";
 my $channel = "#whoogirls";
 
-my $dbh = connectToMySQL();
+my $dbh = connectToMySQL;
 addURLToDB($dbh,$url,$channel);
 disConnectMySQL($dbh);
 
