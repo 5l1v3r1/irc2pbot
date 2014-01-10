@@ -6,11 +6,8 @@ use strict;
 
 use irc qw(:DEFAULT);
 use web qw(:DEFAULT);
-use mysql qw(:DEFAULT);
-# This setup works with I2p but for some reason only if I have my irc client open and connected to irc2p
-my $nick = "1blahblahblajh2";
-my $login ="1blahblahblajh2";
-my $channel = "#testbot";
+#use mysql qw(:DEFAULT);
+use base qw(Bot::BasicBot);
 
 # Add second nick later for if nick is reserved
 # add password to authenticate nick 
@@ -21,35 +18,43 @@ my $channel = "#testbot";
 # Add method to check if tor is running?
  
 
+# Create an instance of the bot and start it running. Connect
+# to the main perl IRC server, and join some channels.
+my $bot = Bot::BasicBot->new(
 
-# Perhaps I need eval here too.
+    server => "127.0.0.1",
+    port   => "6668",
+    channels => ["#testbot"],
 
-my $socket = createSocket;
+    nick      => "whocareswhowho",
+    alt_nicks => ["whowhowhowhowwhowhowhow", "DrWhooWhooWhoo"],
+    username  => "whocareswhowho",
+    name      => "whocareswhowho",
 
-setNick($socket,$login,$nick);
+   
 
-connectCheckNick($socket);
+  );
 
-joinChan($socket,$channel);
 
-# Keep reading the lines from the server respond to ping with pong
-while (my $input = <$socket>) {
-	chop $input;
-	if ($input =~ /^PING(.*)$/i) {
-		#Respond to ping
-		print $socket "PONG $1\r\n";
-	}
-	# Everything happens here.
-else { 
-# Do something
-#
+
+#This is the main method that you'll want to override in your subclass 
+#it's the one called by default whenever someone says anything that we can hear, either in a 
+#public channel or to us in private that we shouldn't ignore.
+sub said {
+my $self = shift;
+my $message = shift;
+my $input = $message->{body};
+my $channel = $message->{channel};
+
+
+
 my ($how_many_found,$url) = checkForURL($input);
 if ($how_many_found > 0) {
 	# Okay we got a URL
 	# Now add it to database.
-	my $dbh = connectToMySQL;
-	addURLToDB($dbh,$url,$channel);
-	disConnectMySQL($dbh);
+#	my $dbh = connectToMySQL;
+#	addURLToDB($dbh,$url,$channel);
+#	disConnectMySQL($dbh);
 
 
 	# Is it an eepsite? If yes do something else get title over tor
@@ -58,12 +63,17 @@ my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
  if (!$how_many_eep) {  # If this is not an eepsite
 #     print "This is not an eepsite";
 my $title = getStuffOverTor($url);
-printTitle($socket,$channel,$title,$url);
-
+#printTitle($socket,$channel,$title,$url);
+# Replace with self->say
 } 
-
+$self->say($title);
 }
 
 
 }
-}
+ $bot->run();
+
+
+
+# Bot can be shut down with:
+#$bot->shutdown( $bot->quit_message() );
