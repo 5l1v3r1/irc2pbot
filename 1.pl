@@ -41,8 +41,7 @@ my $bot = Bot::BasicBot->new(
 #it's the one called by default whenever someone says anything that we can hear, either in a 
 #public channel or to us in private that we shouldn't ignore.
 sub said {
-my $self = shift;
-my $message = shift;
+my ($self, $message) = @_;
 my $input = $message->{body};
 my $channel = $message->{channel};
 
@@ -59,22 +58,21 @@ if ($how_many_found > 0) {
 
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
-my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
-if ($how_many_eep) {
- $self->say($title);
-}
-elsif (!$how_many_eep) {  # If this is not an eepsite
+#my ($how_many_eep,$title) = isEepSite($url);  # Will print title of eepsite
+#if ($how_many_eep) {
+# return $title;
+#}
+#elsif (!$how_many_eep) {  # If this is not an eepsite
 #     print "This is not an eepsite";
-my $title = getStuffOverTor($url);
+#my $title = getStuffOverTor($url);
 #printTitle($socket,$channel,$title,$url);
 # Replace with self->say
- 
-$self->say($title);
+
+#Um get this stupid bot to respond it can connect so far.
+return "Hello World\n";
+}
 }
 
-
-}
-}
 $bot->run();
 
 
