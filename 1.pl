@@ -5,7 +5,7 @@ use strict;
 
 
 use web qw(:DEFAULT);
-#use mysql qw(:DEFAULT);
+use mysql qw(:DEFAULT);
 
 package irc2pbot;
 #
@@ -30,9 +30,9 @@ my ($how_many_found,$url) = web::checkForURL($input);
 if ($how_many_found > 0) {
 	# Okay we got a URL
 	# Now add it to database.
-#	my $dbh = connectToMySQL;
-#	addURLToDB($dbh,$url,$channel);
-#	disConnectMySQL($dbh);
+	my $dbh = mysql::connectToMySQL;
+	mysql::addURLToDB($dbh,$url,$channel);   # Is it okay to connect and disconnect to database all
+	mysql::disConnectMySQL($dbh);            # the time?
 
 
 	# Is it an eepsite? If yes do something else get title over tor
