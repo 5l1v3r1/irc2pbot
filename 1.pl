@@ -56,8 +56,8 @@ return "$title\n";
 # to the main perl IRC server, and join some channels.
 my $bot = irc2pbot->new(  # To use the said method that overrides Bot::BasicBot 
 	                      # We create object of irc2pbot that will have the overrides said method
-    server => "127.0.0.1",
-    port   => "6668",
+    server => "irc.freenode.net",
+    port   => "6667",
     channels => ["#testbot"],
 
     nick      => "whocareswhowho",
