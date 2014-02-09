@@ -43,8 +43,8 @@ set 'layout' => 'main';
 
 #my $database ="urldatabase";
 #my $user = "irc2pbot";
-my $database ="blogdatabase";
-my $user = "bloguser";
+my $database ="urldatabase";
+my $user = "irc2pbot";
  
  # Login as root and created database blogdatabase
  # mysql -u root -p
@@ -54,8 +54,8 @@ my $user = "bloguser";
  # $ mysql -u bloguser -p blogdatabase
  
 ## mysql database password
-#my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
-my $pass = "helloworld13";
+my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
+#my $pass = "helloworld13";
  
 ## user hostname : This should be "localhost" but it can be diffrent too
 my $host="localhost";
@@ -118,35 +118,37 @@ $tokens->{'logout_url'} = uri_for('logout');
 
 
 get '/' => sub {
-	my $db = connect_db();
-	my $sql = 'select id,title,text from entries order by id desc';
+	my $db = connect_db();     # I want this to be: select id,url,channel,date_posted from order by id desc
+	my $sql = 'select id,url,channel from urls order by id desc';
 	my $sth = $db->prepare($sql) or die $db->errstr;
 	$sth->execute or die $sth->errstr;
 	template 'show_entries.tt' , {
 		'msg' => get_flash(),
 		'add_entry_url' => uri_for('/add'),
-		'entries' => $sth->fetchall_hashref('id'),
+		'urls' => $sth->fetchall_hashref('id'),
 	};
 };
 
 
-post '/add' => sub {
-	if (not session('logged_in') ) {
-		send_error("Not logged in",401);
-	}
-
-	my $db = connect_db();
-	my $sql = 'insert into entries (title,text) values (?,?)';
-	my $sth = $db->prepare($sql) or die $db->errstr;
-	$sth->execute(params->{'title'},params->{'text'}) or die $sth->errstr;
+# This is for inserting entries. I don't care much for this part.
+# I've got my own module written to do this.
+#post '/add' => sub {
+#	if (not session('logged_in') ) {
+#		send_error("Not logged in",401);
+#	}
+#
+#	my $db = connect_db();
+#	my $sql = 'insert into entries (title,text) values (?,?)';
+#	my $sth = $db->prepare($sql) or die $db->errstr;
+#	$sth->execute(params->{'title'},params->{'text'}) or die $sth->errstr;
 
 	## Flash keyword imported by Dancer::Plugin::FlashMessage
 	## Not part of dancer core
-	set_flash("New Entry Posted!");
+#	set_flash("New Entry Posted!");
 
-	redirect '/';
+#	redirect '/';
 
-	};
+#	};
 
 
 #Login
