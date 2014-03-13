@@ -4,10 +4,15 @@ TODO:
 Need some focus.
 
 
-Remove web application part for now. Can add that later.
+Remove web application part for now. Can add that later. Instead make users be able to retrieve urls with some command.
+Then they can be retrieved from mysql database.
 
 Use Moose and make modules OO.
 
 Catch errors.
 
 Write unit tests. See on cpan what I should use for this.
+
+
+
+Write some code to check if i2p and tor are running.
