@@ -1,0 +1,13 @@
+TODO:
+-------------
+
+
+Catch errors.
+
+Make libraries OO with Moose.
+
+Write methods to check if tor and i2p are running.
+
+Write unit tests.
+
+Make it auto configure.  
