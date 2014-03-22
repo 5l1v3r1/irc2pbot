@@ -2,19 +2,10 @@ package mysql;
 
 use strict;
 use DBI();
- 
-BEGIN {
-	require Exporter;
+use Moose;
 
-	# Set version for version tracking.
-	our $VERSION = 1.00;
 
-	#Inherit from Exporter to export functions and variables.
-	our @ISA = qw(Exporter);
 
-	# Functions and variables which are exported by default.
-	our @EXPORT = qw($db $user $pass $host connectToMySQL addURLToDB disConnectMySQL);
-}
 
 # Login and view entries:
 #  mysql -u irc2pbot -p urldatabase
@@ -23,23 +14,52 @@ BEGIN {
 #
 # I can write a function to change these values but for now
 # they will stay the same for development.
-my $db ="urldatabase";
-my $user = "irc2pbot";
+has 'db' => (
+is => 'ro', # Once this value has been set there is no reason to change it.
+isa => 'Str', # Value is a string
+required => 1,  # Attribute must be defined.
+);
+
+has 'user' => (
+is => 'ro',
+isa => 'Str',
+required => 1,
+);
+
+has 'pass' => (
+is => 'ro',
+isa => 'Str',
+required => 1,
+);
+
+has 'host' => (
+is => 'ro'
+isa => 'Str',
+required => 1,
+);
+# Maybe rather make a hash to represent these values?
+# Don't know how to do this.
+
+
+#my $db ="urldatabase";
+#my $user = "irc2pbot";
  
 ## mysql database password
-my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
+#my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
  
 ## user hostname : This should be "localhost" but it can be diffrent too
-my $host="localhost";
+#my $host="localhost";
  
 
 
 # To call:
 # my $dbh = connectToMySQL();
 sub connectToMySQL {
+my $self = shift;
+
   # Connect to the database.
-  my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
-                         "$user","$pass" ,
+  my $dbh = DBI->connect("DBI:mysql:database=$self->db();host=$self->host()",
+                         "$self->user()","$self->pass()" ,
                          {'RaiseError' => 1});
  return $dbh;
  }
