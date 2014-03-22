@@ -15,27 +15,26 @@ use Moose;
 # I can write a function to change these values but for now
 # they will stay the same for development.
 has 'db' => (
-is => 'ro', # Once this value has been set there is no reason to change it.
+is => 'rw', # Once this value has been set there is no reason to change it.
 isa => 'Str', # Value is a string
 required => 1,  # Attribute must be defined.
 );
 
 has 'user' => (
-is => 'ro',
+is => 'rw',
 isa => 'Str',
 required => 1,
 );
 
 has 'pass' => (
-is => 'ro',
+is => 'rw',
 isa => 'Str',
 required => 1,
 );
 
 has 'host' => (
-is => 'ro'
+is => 'rw',
 isa => 'Str',
-required => 1,
 );
 # Maybe rather make a hash to represent these values?
 # Don't know how to do this.
@@ -67,10 +66,14 @@ required => 1,
 # my $dbh = connectToMySQL();
 sub connectToMySQL {
 my $self = shift;
+my $hostname = $self->host();
+my $database = $self->db();
+my $username = $self->user();
+my $password = $self->pass();
 
   # Connect to the database.
-  my $dbh = DBI->connect("DBI:mysql:database=$self->db();host=$self->host()",
-                         "$self->user()","$self->pass()" ,
+  my $dbh = DBI->connect("DBI:mysql:database=$database;host=$hostname",
+                         "$username","$password" ,
                          {'RaiseError' => 1});
  return $dbh;
  }
