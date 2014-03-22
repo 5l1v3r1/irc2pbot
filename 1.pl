@@ -4,8 +4,8 @@ use strict;
 #use warnings;
 
 
-use web qw(:DEFAULT);
-use mysql qw(:DEFAULT);
+use web;
+use mysql;
 
 package irc2pbot;
 #
@@ -25,25 +25,32 @@ my ($self, $message) = @_;
 my $input = $message->{body};
 my $channel = $message->{channel};
 
+my $sql_instance = mysql->new(
+	db => "urldatabase",
+	user => "irc2pbot",
+	pass => "jg&SH#2C.n=j9vHxzePMXAjeJ",
+	host => "localhost",
+);
+my $web_obj = web->new();
 
-my ($how_many_found,$url) = web::checkForURL($input);
+my ($how_many_found,$url) = $web_obj->checkForURL($input);
 if ($how_many_found > 0) {
 	# Okay we got a URL
 	# Now add it to database.
-	my $dbh = mysql::connectToMySQL;
-	mysql::addURLToDB($dbh,$url,$channel);   # Is it okay to connect and disconnect to database all
-	mysql::disConnectMySQL($dbh);            # the time?
+	my $dbh = $sql_instance->connectToMySQL();
+	$sql_instance->addURLToDB($dbh,$url,$channel); 
+	$sql_instance->disConnectMySQL($dbh);          
 
 
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
-my ($how_many_eep,$title) = web::isEepSite($url);  # Will print title of eepsite
+my ($how_many_eep,$title) = $web_obj->isEepSite($url);  # Will print title of eepsite
 if ($how_many_eep) {
  return $title;
 }
 elsif (!$how_many_eep) {  # If this is not an eepsite
 #     print "This is not an eepsite";
-my $title = web::getStuffOverTor($url);
+my $title = $web_obj->getStuffOverTor($url);
 #printTitle($socket,$channel,$title,$url);
 # Replace with self->say
 
@@ -54,8 +61,9 @@ return "$title\n";
 }
 # Create an instance of the bot and start it running. Connect
 # to the main perl IRC server, and join some channels.
-my $bot = irc2pbot->new(  # To use the said method that overrides Bot::BasicBot 
-	                      # We create object of irc2pbot that will have the overrides said method
+
+my $bot = irc2pbot->new(  # To use the said method that overrides Bot::BasicBot      
+# We create object of irc2pbot that will have the overrides said method
     server => "irc.freenode.net",
     port   => "6667",
     channels => ["#testbot"],
