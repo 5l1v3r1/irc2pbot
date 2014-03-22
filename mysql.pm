@@ -41,6 +41,17 @@ required => 1,
 # Don't know how to do this.
 
 
+# Use mysql;
+# my $sql_instance = mysql->new(
+# db => "urldatabase",
+# user => "irc2pbot",
+# pass => "somepassword",
+# host => "localhost",
+# );
+
+# Calling methods:
+# $sql_instance->connectToMySQL();
+
 #my $db ="urldatabase";
 #my $user = "irc2pbot";
  
@@ -98,11 +109,4 @@ $dbh->disconnect();
 }
 
 
-# We need a method for retriving the entries and displaying them
-# on some webpage: mysql> select * from urls;
-
-
-# Think if I need sql injection protectin later on. If I do,
-# look at sql query parameterization on rosetta code.
-
--1
+1
