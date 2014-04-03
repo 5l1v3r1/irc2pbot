@@ -2,10 +2,19 @@ package mysql;
 
 use strict;
 use DBI();
-use Moose;
+ 
+BEGIN {
+	require Exporter;
 
+	# Set version for version tracking.
+	our $VERSION = 1.00;
 
+	#Inherit from Exporter to export functions and variables.
+	our @ISA = qw(Exporter);
 
+	# Functions and variables which are exported by default.
+	our @EXPORT = qw($db $user $pass $host connectToMySQL addURLToDB disConnectMySQL);
+}
 
 # Login and view entries:
 #  mysql -u irc2pbot -p urldatabase
@@ -14,66 +23,23 @@ use Moose;
 #
 # I can write a function to change these values but for now
 # they will stay the same for development.
-has 'db' => (
-is => 'rw', # Once this value has been set there is no reason to change it.
-isa => 'Str', # Value is a string
-required => 1,  # Attribute must be defined.
-);
-
-has 'user' => (
-is => 'rw',
-isa => 'Str',
-required => 1,
-);
-
-has 'pass' => (
-is => 'rw',
-isa => 'Str',
-required => 1,
-);
-
-has 'host' => (
-is => 'rw',
-isa => 'Str',
-);
-# Maybe rather make a hash to represent these values?
-# Don't know how to do this.
-
-
-# Use mysql;
-# my $sql_instance = mysql->new(
-# db => "urldatabase",
-# user => "irc2pbot",
-# pass => "somepassword",
-# host => "localhost",
-# );
-
-# Calling methods:
-# $sql_instance->connectToMySQL();
-
-#my $db ="urldatabase";
-#my $user = "irc2pbot";
+my $db ="urldatabase";
+my $user = "irc2pbot";
  
 ## mysql database password
-#my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
+my $pass = "jg&SH#2C.n=j9vHxzePMXAjeJ";
  
 ## user hostname : This should be "localhost" but it can be diffrent too
-#my $host="localhost";
+my $host="localhost";
  
 
 
 # To call:
 # my $dbh = connectToMySQL();
 sub connectToMySQL {
-my $self = shift;
-my $hostname = $self->host();
-my $database = $self->db();
-my $username = $self->user();
-my $password = $self->pass();
-
   # Connect to the database.
-  my $dbh = DBI->connect("DBI:mysql:database=$database;host=$hostname",
-                         "$username","$password" ,
+  my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
+                         "$user","$pass" ,
                          {'RaiseError' => 1});
  return $dbh;
  }
@@ -112,4 +78,12 @@ $dbh->disconnect();
 }
 
 
-1
+# We need a method for retriving the entries and displaying them
+# on some webpage: mysql> select * from urls;
+
+
+# Think if I need sql injection protectin later on. If I do,
+# look at sql query parameterization on rosetta code.
+
+-1
+
