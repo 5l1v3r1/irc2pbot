@@ -35,9 +35,13 @@ my $host="localhost";
 
 
 # To call:
-# my $dbh = connectToMySQL();
+# my $dbh = connectToMySQL($host,$database,$user,$password);
 sub connectToMySQL {
   # Connect to the database.
+  my $host = $_[0];
+  my $db = $_[1];  
+  my $user = $_[2];
+  my $pass = $_[3];
   my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
                          "$user","$pass" ,
                          {'RaiseError' => 1});
