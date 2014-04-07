@@ -3,13 +3,12 @@ package web;
 use strict;
 use warnings;
 
-
 use URI::Find;
 use URI::Find::Simple qw(list_uris);
 use WWW::Mechanize;
 use LWP::Protocol::socks;
 
-# http://perldoc.perl.org/perlmod.html#Perl-Modules
+
 BEGIN {
    require Exporter;
 
@@ -23,11 +22,12 @@ BEGIN {
         our @EXPORT = qw(getStuffOverTor checkForURL getStuffOverI2P isEepSite);
 
 }
-# Exported package globals go here
+
+# http://perltraining.com.au/tips/2010-01-27.html
 
 # Need to create function to check if tor is running?
 # If Tor isn't running then start it.
-# Call funtion with:
+# Call function with:
 # my $title = getStuffOverTor($url);
 #
 sub getStuffOverTor {
@@ -98,6 +98,10 @@ return ($how_many_found,$url);
 # my ($how_many_eep, $title) = isEepSite($url);
 # if ($how_many_eep ~= "0")
 #
+
+# This is kinda messy. I can clean this up later. 
+
+
 sub isEepSite {
 
 my $url = $_[0];
@@ -127,4 +131,4 @@ else {
 
 
 # This is how we end a module/external sub
--1
+1

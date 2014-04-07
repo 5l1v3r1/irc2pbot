@@ -4,8 +4,8 @@ use strict;
 #use warnings;
 
 
-use web qw(:DEFAULT);
-use mysql qw(:DEFAULT);
+use web;
+use mysql;
 
 package irc2pbot;
 #
@@ -26,14 +26,15 @@ my $input = $message->{body};
 my $channel = $message->{channel};
 
 
+
 my ($how_many_found,$url) = web::checkForURL($input);
 if ($how_many_found > 0) {
 	# Okay we got a URL
 	# Now add it to database.
-	my $dbh = mysql::connectToMySQL;
-	mysql::addURLToDB($dbh,$url,$channel);   # Is it okay to connect and disconnect to database all
-	mysql::disConnectMySQL($dbh);            # the time?
-
+	my $dbh = mysql::connectToMySQL();
+	mysql::addURLToDB($dbh,$url,$channel); 
+	mysql::disConnectMySQL($dbh);          
+                     
 
 	# Is it an eepsite? If yes do something else get title over tor
 	# which assumes that site is either .onion or clearnet site.
@@ -54,8 +55,9 @@ return "$title\n";
 }
 # Create an instance of the bot and start it running. Connect
 # to the main perl IRC server, and join some channels.
-my $bot = irc2pbot->new(  # To use the said method that overrides Bot::BasicBot 
-	                      # We create object of irc2pbot that will have the overrides said method
+
+my $bot = irc2pbot->new(  # To use the said method that overrides Bot::BasicBot      
+# We create object of irc2pbot that will have the overrides said method
     server => "irc.freenode.net",
     port   => "6667",
     channels => ["#testbot"],

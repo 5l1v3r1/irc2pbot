@@ -35,10 +35,16 @@ my $host="localhost";
 
 
 # To call:
-# my $dbh = connectToMySQL();
+# my $dbh = connectToMySQL($host,$database,$user,$password);
+# my $dbh = connectToMySQL()
+
 sub connectToMySQL {
-  # Connect to the database.
-  my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
+	#Connect to the database.
+#  my $host = $_[0];
+#  my $db = $_[1];  
+#  my $user = $_[2];
+  # my $pass = $_[3];
+   my $dbh = DBI->connect("DBI:mysql:database=$db;host=$host",
                          "$user","$pass" ,
                          {'RaiseError' => 1});
  return $dbh;
@@ -86,3 +92,4 @@ $dbh->disconnect();
 # look at sql query parameterization on rosetta code.
 
 -1
+
